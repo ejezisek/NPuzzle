@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Business Solutions</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />	
+	<!--[if lte IE 7]>
+		<link rel="stylesheet" href="css/ie.css" type="text/css" charset="utf-8" />	
+	<![endif]-->
+</head>
+
+<body>
+	<div id="header">
+		<a href="index.html" id="logo"><img src="images/logo.jpg" alt="LOGO" /></a>
+		<div id="navigation">
+			<ul>
+				<li class="first"><a href="index.html">Home</a></li>
+				<li><a href="about.html">About us</a></li>
+				<li><a href="services.html">Services</a></li>
+				<li><a href="solutions.html">Solutions</a></li>
+				<li><a href="support.html">Support</a></li>
+				<li class="selected"><a href="blog.html">Blog</a></li>
+				<li><a href="contact.html">Contact</a></li>
+			</ul>
+		</div>
+		<div id="search">
+			<form action="" method="">
+				<input type="text" value="Search" class="txtfield" onblur="javascript:if(this.value==''){this.value=this.defaultValue;}" onfocus="javascript:if(this.value==this.defaultValue){this.value='';}" />
+				<input type="submit" value="" class="button" />
+			</form>
+		</div>
+	</div> <!-- /#header -->
+	<div id="contents">
+		<div class="background">
+			<div id="blogs">
+				<div class="sidebar">
+					<div class="posts">
+						<h3>Recent Posts</h3>
+						<ul>
+							<li><a href="blog.html">Aliquam varius pulvinar lorem ipsum dolor sit amet</a></li>
+							<li><a href="blog.html">Fusce purus urna, commodo ac tempus id </a></li>
+							<li><a href="blog.html">Praesent pharetra molestie massa ornare</a></li>
+							<li><a href="blog.html">Vestibulum tempus erat sit amet nam non erat neque</a></li>
+							<li><a href="blog.html">Sed quis diam ac neque mauris vulputate ut blandit </a></li>
+						</ul>
+					</div>
+					<div class="archives">
+						<h3>Archives</h3>
+						<ul>
+							<li><a href="">December</a></li>
+							<li><a href="">June</a></li>
+							<li><a href="">November</a></li>
+							<li><a href="">May</a></li>
+							<li><a href="">October</a></li>
+							<li><a href="">April</a></li>
+							<li><a href="">September</a></li>
+							<li><a href="">March</a></li>
+							<li><a href="">August</a></li>
+							<li><a href="">February</a></li>
+							<li><a href="">July</a></li>
+							<li><a href="">January</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="section">
+					<h3>Traversing a Tree - Preorder Traversal </h3>
+					<p>There are many problems with respect to Computer Engineering that require the traversal of a tree.  One of these is DCR, I plan on discussing DCR in the future, but if you're interested you can view a document about this topic on <a href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=210282&url=http%3A%2F%2Fieeexplore.ieee.org%2Fiel1%2F24%2F5455%2F00210282.pdf%3Farnumber%3D210282">IEEE</a>. </p>
+					<p>Preorder Traversal is a method of traversing a Tree Data Structure.  The idea of the pre-order traversal is to navigate from a node to its left most node.  Each node will attempt to go to its left most node.  When the algorithm runs out of left nodes, the algorithm will continue by going right and repeating the process.  If the traversal is unable to continue going right, it backs up a node and attempts to go right.  This continues until the entire tree has been visited.  This blog will continue by showing code in Java, illustrating a interactive tree and demonstrating unit tests that can be performed on the code.  This can be represented in java as:</p>
+					<pre class="prettyprint linenums" id="mainCode">
+public interface Action
+{
+	public void performAction(Node node);
+}
+public interface Node
+{
+	public Node getLeft();
+	public Node getRight();
+}
+
+/**
+ * This traverses nodes in a preorder fashion.
+ * It calls nodes recursively from the left and then 
+ * recursively calls the nodes to the right.
+**/
+public void PreorderTraversal(Node head, Action action)
+{
+	if(head==null)
+		return;
+	action.performAction(head);
+	Node left=head.getLeft();
+	PreorderTraversal(left, action);
+	Node right=head.getRight();
+	PreorderTraversal(right, action);
+}
+</pre>
+<p>
+Below is a display of the tree as it goes through the preorder traversal.  Press next to iterate through each element.  The active element will be yellow, inactive elements will be blue and elements that have already been processed will be grey.  You can delete elements by pressing the X button.  The tree will rebalance itself when elements are deleted.
+</p>
+<table>
+	<tr>
+		<td>
+		<table>
+			<tr>
+			<td>
+				<canvas width=250 height=270></canvas>
+			</td>
+			</tr>
+			<tr>
+			<td align="center">
+				<button type="button" onclick="transmit()">Next</button>
+			</td>
+			</tr>
+		</table>
+		</td>
+
+		<td>
+		<table>
+		<tr>
+<td>
+<b>Call Stack:</b>
+<ol>
+<li>PT(Node0, action)</li>
+</ol>
+
+</td>
+</tr>
+		<tr>
+		<td>
+<pre class="prettyprint linenums" id="subCode">
+void PT(Node head, Action action)
+{
+  <FONT style="BACKGROUND-COLOR: yellow">if(head==null)</FONT>
+    return;
+  action.performAction(head);
+  Node left=head.getLeft();
+  PreorderTraversal(left, action);
+  Node right=head.getRight();
+  PreorderTraversal(right, action);
+}
+
+</pre>
+</td>
+</tr>
+
+</table>
+		</td>
+
+	</tr>
+
+</table>
+					</div>   
+				</div>
+			</div>
+		</div>
+	<div id="footer">
+		<ul class="contacts">
+			<h3>Contact Us</h3>
+			<li><span>Email</span><p>: company@email.com</p></li>
+			<li><span>Address</span><p>: 189 Lorem Ipsum Pellentesque, Mauris Etiam ut velit odio Proin id nisi enim 0000</p></li>
+			<li><span>Phone</span><p>: 117-683-9187-000</p></li>
+		</ul>
+		<ul id="connect">
+			<h3>Get Updated</h3>
+			<li><a href="blog.html">Blog</a></li>
+			<li><a href="http://facebook.com/freewebsitetemplates" target="_blank">Facebook</a></li>
+			<li><a href="http://twitter.com/fwtemplates" target="_blank">Twitter</a></li>
+		</ul>
+		<div id="newsletter">
+			<p><b>Sign-up for Newsletter</b>
+				In sollicitudin vulputate metus, sed commodo diam elementum nec. Sed et risus sed magna convallis adipiscing.
+			</p>
+			<form action="" method="">
+				<input type="text" value="Name" class="txtfield" onblur="javascript:if(this.value==''){this.value=this.defaultValue;}" onfocus="javascript:if(this.value==this.defaultValue){this.value='';}" />
+				<input type="text" value="Enter Email Address" class="txtfield" onblur="javascript:if(this.value==''){this.value=this.defaultValue;}" onfocus="javascript:if(this.value==this.defaultValue){this.value='';}" />
+				<input type="submit" value="" class="button" />
+			</form>
+		</div>
+		<span class="footnote">&copy; Copyright &copy; 2011. All rights reserved</span>
+	</div> <!-- /#footer -->
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+<script src="Javascript/jquery-1.11.2.min.js"></script>
+<script src="Javascript/jcanvas.min.js"></script>
+<script src="Javascript/preorderTraversal.js"></script>
+</body>
+</html>
