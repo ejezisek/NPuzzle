@@ -3,32 +3,27 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Business Solutions</title>
+	<title>JEZ3 Software Development</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />	
+	<link href="css/nouislider.min.css" rel="stylesheet" /	>
+	
 	<!--[if lte IE 7]>
 		<link rel="stylesheet" href="css/ie.css" type="text/css" charset="utf-8" />	
 	<![endif]-->
 </head>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
 
 <body>
 	<div id="header">
-		<a href="index.html" id="logo"><img src="images/logo.jpg" alt="LOGO" /></a>
-		<div id="navigation">
+<div id="headerLink">
+			<a href="index.html" id="logo">Jezisek Software</a>
+		</div>		<div id="navigation">
 			<ul>
 				<li class="first"><a href="index.html">Home</a></li>
 				<li><a href="about.html">About us</a></li>
-				<li><a href="services.html">Services</a></li>
-				<li><a href="solutions.html">Solutions</a></li>
-				<li><a href="support.html">Support</a></li>
-				<li class="selected"><a href="blog.html">Blog</a></li>
-				<li><a href="contact.html">Contact</a></li>
+				<li class="selected"><a href="blog.html">Blog</a></li> 
 			</ul>
-		</div>
-		<div id="search">
-			<form action="" method="">
-				<input type="text" value="Search" class="txtfield" onblur="javascript:if(this.value==''){this.value=this.defaultValue;}" onfocus="javascript:if(this.value==this.defaultValue){this.value='';}" />
-				<input type="submit" value="" class="button" />
-			</form>
 		</div>
 	</div> <!-- /#header -->
 	<div id="contents">
@@ -38,17 +33,15 @@
 					<div class="posts">
 						<h3>Recent Posts</h3>
 						<ul>
-							<li><a href="blog.html">Aliquam varius pulvinar lorem ipsum dolor sit amet</a></li>
-							<li><a href="blog.html">Fusce purus urna, commodo ac tempus id </a></li>
-							<li><a href="blog.html">Praesent pharetra molestie massa ornare</a></li>
-							<li><a href="blog.html">Vestibulum tempus erat sit amet nam non erat neque</a></li>
-							<li><a href="blog.html">Sed quis diam ac neque mauris vulputate ut blandit </a></li>
+							<li><a href="blog.html">Traversing a Tree - Preorder Traversal </a></li>
 						</ul>
 					</div>
 					<div class="archives">
 						<h3>Archives</h3>
 						<ul>
-							<li><a href="">December</a></li>
+							<li><a href="blog.html">August - 2015</a></li>
+						
+<!-- 	<li><a href="">December</a></li>
 							<li><a href="">June</a></li>
 							<li><a href="">November</a></li>
 							<li><a href="">May</a></li>
@@ -60,42 +53,23 @@
 							<li><a href="">February</a></li>
 							<li><a href="">July</a></li>
 							<li><a href="">January</a></li>
+							 -->					
 						</ul>
 					</div>
 				</div>
 				<div class="section">
 					<h3>Traversing a Tree - Preorder Traversal </h3>
 					<p>There are many problems with respect to Computer Engineering that require the traversal of a tree.  One of these is DCR, I plan on discussing DCR in the future, but if you're interested you can view a document about this topic on <a href="http://ieeexplore.ieee.org/xpl/login.jsp?tp=&arnumber=210282&url=http%3A%2F%2Fieeexplore.ieee.org%2Fiel1%2F24%2F5455%2F00210282.pdf%3Farnumber%3D210282">IEEE</a>. </p>
-					<p>Preorder Traversal is a method of traversing a Tree Data Structure.  The idea of the pre-order traversal is to navigate from a node to its left most node.  Each node will attempt to go to its left most node.  When the algorithm runs out of left nodes, the algorithm will continue by going right and repeating the process.  If the traversal is unable to continue going right, it backs up a node and attempts to go right.  This continues until the entire tree has been visited.  This blog will continue by showing code in Java, illustrating a interactive tree and demonstrating unit tests that can be performed on the code.  This can be represented in java as:</p>
-					<pre class="prettyprint linenums" id="mainCode">
-public interface Action
-{
-	public void performAction(Node node);
-}
-public interface Node
-{
-	public Node getLeft();
-	public Node getRight();
-}
-
-/**
- * This traverses nodes in a preorder fashion.
- * It calls nodes recursively from the left and then 
- * recursively calls the nodes to the right.
-**/
-public void PreorderTraversal(Node head, Action action)
-{
-	if(head==null)
-		return;
-	action.performAction(head);
-	Node left=head.getLeft();
-	PreorderTraversal(left, action);
-	Node right=head.getRight();
-	PreorderTraversal(right, action);
-}
-</pre>
-<p>
-Below is a display of the tree as it goes through the preorder traversal.  Press next to iterate through each element.  The active element will be yellow, inactive elements will be blue and elements that have already been processed will be grey.  You can delete elements by pressing the X button.  The tree will rebalance itself when elements are deleted.
+					<p>Preorder Traversal is a method of traversing a Tree Data Structure.  
+					The idea of the pre-order traversal is to print the root node, navigate to the left node, perform the traversal on the left node, navigate to the right node and perform the traversal on the right node. 
+					 This continues until the entire tree has been visited.  
+					 This blog will continue by  illustrating a interactive tree, showing code in Java which will utilize templates for reuse, and
+					 demonstrating unit tests that can be performed on the code   
+					 
+					
+						Below is a display of the tree as it goes through the preorder traversal.  
+Press next to iterate through each element.  Each element starts off as a light blue.  After clicking next, the current root element will turn black and the next root element will follow in preorder fashion.
+Elements can be deleted by clicking on them.  You can increase the number of elements by dragging the slide bar to the right and decrease them by dragging it to the left.
 </p>
 <table>
 	<tr>
@@ -103,7 +77,8 @@ Below is a display of the tree as it goes through the preorder traversal.  Press
 		<table>
 			<tr>
 			<td>
-				<canvas width=250 height=270></canvas>
+				<canvas width=500 height=270 id="canvas"></canvas>
+
 			</td>
 			</tr>
 			<tr>
@@ -115,6 +90,7 @@ Below is a display of the tree as it goes through the preorder traversal.  Press
 		</td>
 
 		<td>
+<!-- 
 		<table>
 		<tr>
 <td>
@@ -144,43 +120,246 @@ void PT(Node head, Action action)
 </tr>
 
 </table>
+ -->
 		</td>
 
 	</tr>
 
 </table>
+
+	<p>
+			<div id="colorpicker">
+				<div class="sliders" id="skipstep">
+				</div>
+			</div>
+				<label for="amount">Number of Nodes:</label>
+		<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+	</p>  
+<div id="slider-range-max"></div>
+<h2>Java Representation:</h2>
+ 					<pre class="prettyprint linenums" id="mainCode">
+/**
+ * This action has two template values.  The template value T
+ * ensures that any Nodes operations can be supported by
+ * any action.  The template value K allows the Action to return any value
+ * in the getValue operation.  This should allow the preorder traversal to 
+ * be reused for many different types of problems.
+ * @param &ltT&gt
+ * @param &ltK&gt
+ */
+public static interface Action&ltT extends Node&ltT&gt, K&gt
+{
+	public void performAction(Node&ltT&gt node);
+	public boolean complete();
+	public K getValue();
+}
+
+/**
+ * The Node is able to get the left node and the right node.  This is the 
+ * requirement for a Binary Tree.  The Node has a template element T which 
+ * extends Node&ltT&gt.  This allows Action&ltT extends Node&ltT&gt&gt to use 
+ * any public methods inside Node&ltT&gt that we do not currently know about
+ * and when the traversal goes left or right, it returns the correct Node 
+ * type instead of returning a Node that can only go left and right.
+ * @param &ltT&gt
+ */
+public static interface Node&ltT extends Node&ltT&gt&gt 
+{
+	public T getLeft();
+	public T getRight();
+}
+ 
+/**
+ * This traverses nodes in a preorder fashion.
+ * It calls nodes recursively from the left and then 
+ * recursively calls the nodes to the right.
+**/
+public static &ltT extends Node&ltT&gt, K&gt K PreorderTraversal(T head, 
+                                                       Action&ltT, K&gt action)
+{
+	if(head==null || action.complete())
+		return action.getValue();
+	action.performAction(head);
+	T left=head.getLeft();
+	PreorderTraversal(left, action);
+	T right=head.getRight();
+	PreorderTraversal(right, action);
+	return action.getValue();
+}
+</pre>
+
+<br>
+	<h2>Unit Testing</h2>
+	<p>
+	After creating the pre-order traversal, it needs to be tested.  
+	To do this, we create a tree and ensure the nodes are traversed in the correct order.
+	To ensure the nodes are traversed in the correct order 
+	we implement a method to figure out the Kth item of the list.  To ensure that 
+	the preorder traversal is correct, we create a tree with 3 nodes.
+	A root element "one", and its left element "two" followed by its right element "three".
+	In the preorder traversal, the first element printed is the root element or "one", the second
+	printed element is the left element "two" and finally the third node is printed "three".
+	As such, we will show that the tree is traversed in the correct manner for at least three nodes.
+	</p>
+	<pre class="prettyprint linenums" id="mainCode">
+private static class getKthItemAction implements Traversals.Action&ltTestNode, String&gt
+{
+	String value=null;
+	int index=0;
+	private int desiredIndex;
+	private boolean complete;
+	public getKthItemAction(int desiredIndex)
+	{
+		this.desiredIndex=desiredIndex;
+		complete=false;
+	}
+	@Override
+	public void performAction(Traversals.Node&ltTestNode&gt node) {
+		index++;
+		if(index==desiredIndex)
+		{
+			complete=true;
+			value=node.toString();
+		}
+	}
+
+	@Override
+	public boolean complete() {
+		// TODO Auto-generated method stub
+		return complete;
+	}
+
+	@Override
+	public String getValue() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+	
+}
+
+private static class TestNode implements Traversals.Node&ltTestNode&gt
+{
+	private TestNode left;
+	private TestNode right;
+	private String value;
+	public TestNode(String value)
+	{
+		this.value=value;
+	}
+	public void setLeft(TestNode left)
+	{
+		this.left=left;
+	}
+	public void setRight(TestNode right)
+	{
+		this.right=right;
+	}
+	@Override
+	public TestNode getLeft() {
+		// TODO Auto-generated method stub
+		return left;
+	}
+
+	@Override
+	public TestNode getRight() {
+		// TODO Auto-generated method stub
+		return right;
+	}
+	@Override
+	public String toString()
+	{
+		return value;
+	}
+
+
+}
+public TestNode generateTree()
+{
+	TestNode one=new TestNode("0");
+	TestNode two=new TestNode("1");
+	TestNode three=new TestNode("2");
+	one.setLeft(two);
+	one.setRight(three);
+	return one;
+}
+
+@Test
+public void Preordertest() {
+	TestNode root=generateTree();		
+	assertTrue("0".equals(Traversals.PreorderTraversal(root, new getKthItemAction(1))));
+	assertTrue("1".equals(Traversals.PreorderTraversal(root, new getKthItemAction(2))));
+	assertTrue("2".equals(Traversals.PreorderTraversal(root, new getKthItemAction(3))));
+}
+	</pre>
+	
 					</div>   
 				</div>
 			</div>
 		</div>
-	<div id="footer">
+<div id="footer">
 		<ul class="contacts">
 			<h3>Contact Us</h3>
-			<li><span>Email</span><p>: company@email.com</p></li>
-			<li><span>Address</span><p>: 189 Lorem Ipsum Pellentesque, Mauris Etiam ut velit odio Proin id nisi enim 0000</p></li>
-			<li><span>Phone</span><p>: 117-683-9187-000</p></li>
+			<li><span>Email</span><p>: help@jeziseksoftware.com</p></li>
 		</ul>
 		<ul id="connect">
 			<h3>Get Updated</h3>
 			<li><a href="blog.html">Blog</a></li>
-			<li><a href="http://facebook.com/freewebsitetemplates" target="_blank">Facebook</a></li>
-			<li><a href="http://twitter.com/fwtemplates" target="_blank">Twitter</a></li>
+			<li><a href="https://www.facebook.com/JEZ3Apps" target="_blank">Facebook</a></li>
 		</ul>
-		<div id="newsletter">
-			<p><b>Sign-up for Newsletter</b>
-				In sollicitudin vulputate metus, sed commodo diam elementum nec. Sed et risus sed magna convallis adipiscing.
-			</p>
-			<form action="" method="">
-				<input type="text" value="Name" class="txtfield" onblur="javascript:if(this.value==''){this.value=this.defaultValue;}" onfocus="javascript:if(this.value==this.defaultValue){this.value='';}" />
-				<input type="text" value="Enter Email Address" class="txtfield" onblur="javascript:if(this.value==''){this.value=this.defaultValue;}" onfocus="javascript:if(this.value==this.defaultValue){this.value='';}" />
-				<input type="submit" value="" class="button" />
-			</form>
-		</div>
-		<span class="footnote">&copy; Copyright &copy; 2011. All rights reserved</span>
+		<span class="footnote">&copy; Copyright &copy; 2015. All rights reserved</span>
 	</div> <!-- /#footer -->
-	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
-<script src="Javascript/jquery-1.11.2.min.js"></script>
+	<script src="Javascript/run_prettify.js"></script>
+	<script src="Javascript/nouislider.min.js"></script>
+	<script src="Javascript/jquery-1.11.2.min.js"></script>
 <script src="Javascript/jcanvas.min.js"></script>
-<script src="Javascript/preorderTraversal.js"></script>
+
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="Javascript/preorderTraversal.js"></script>
+  
+  <script>
+
+
+  var skipSlider = document.getElementById('skipstep');
+  noUiSlider.create(skipSlider, {
+      range: {
+          'min': 1,
+          '7%': 2,
+          '14%': 3,
+          '21%': 4,
+  		  '28%': 5,
+  		  '35%': 6,
+  		  '42%': 7,
+  		  '49%': 8,
+  		  '56%': 9,
+  		  '63%': 10,
+  		  '70%': 11,
+  		  '77%': 12,
+  		  '84%': 13,
+          '91%': 14,
+          '100%': 15, 	
+          'max': 15
+      },
+      snap: true,
+      start: [7]
+  });
+
+
+                skipSlider.noUiSlider.on('update', function( values, handle ) {
+                    $( "#amount" ).val( values );
+                    reset();
+                    drawCenteredTree(values,15, 500);
+                });
+
+
+ 
+  $(function() {
+    $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+    drawCenteredTree(val, 15, 500);
+  });
+  function resetTree()
+  {
+	   drawCenteredTree(val, 15, 500);
+  }
+  </script>
 </body>
 </html>

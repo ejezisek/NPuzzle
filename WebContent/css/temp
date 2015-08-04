@@ -1,0 +1,103 @@
+private static class getKthItemAction implements Traversals.Action&ltTestNode, String&gt
+{
+	String value=null;
+	int index=0;
+	private int desiredIndex;
+	private boolean complete;
+	public getKthItemAction(int desiredIndex)
+	{
+		this.desiredIndex=desiredIndex;
+		complete=false;
+	}
+	@Override
+	public void performAction(Traversals.Node&ltTestNode&gt node) {
+		index++;
+		if(index==desiredIndex)
+		{
+			complete=true;
+			value=node.toString();
+		}
+	}
+
+	@Override
+	public boolean complete() {
+		// TODO Auto-generated method stub
+		return complete;
+	}
+
+	@Override
+	public String getValue() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+	
+}
+
+private static class TestNode implements Traversals.Node<TestNode>
+{
+	private TestNode left;
+	private TestNode right;
+	private String value;
+	public TestNode(String value)
+	{
+		this.value=value;
+	}
+	public void setLeft(TestNode left)
+	{
+		this.left=left;
+	}
+	public void setRight(TestNode right)
+	{
+		this.right=right;
+	}
+	@Override
+	public TestNode getLeft() {
+		// TODO Auto-generated method stub
+		return left;
+	}
+
+	@Override
+	public TestNode getRight() {
+		// TODO Auto-generated method stub
+		return right;
+	}
+	@Override
+	public String toString()
+	{
+		return value;
+	}
+
+
+}
+public TestNode generateTree()
+{
+	TestNode one=new TestNode("0");
+	TestNode two=new TestNode("1");
+	TestNode three=new TestNode("2");
+	one.setLeft(two);
+	one.setRight(three);
+	return one;
+}
+
+@Test
+public void Preordertest() {
+	TestNode root=generateTree();		
+	assertTrue("0".equals(Traversals.PreorderTraversal(root, new getKthItemAction(1))));
+	assertTrue("1".equals(Traversals.PreorderTraversal(root, new getKthItemAction(2))));
+	assertTrue("2".equals(Traversals.PreorderTraversal(root, new getKthItemAction(3))));
+}
+
+@Test
+public void Postordertest() {
+	TestNode root=generateTree();
+	assertTrue("1".equals(Traversals.PostorderTraversal(root, new getKthItemAction(1))));
+	assertTrue("2".equals(Traversals.PostorderTraversal(root, new getKthItemAction(2))));
+	assertTrue("0".equals(Traversals.PostorderTraversal(root, new getKthItemAction(3))));
+}
+@Test
+public void Inordertest() {
+	TestNode root=generateTree();
+	assertTrue("1".equals(Traversals.InorderTraversal(root, new getKthItemAction(1))));
+	assertTrue("0".equals(Traversals.InorderTraversal(root, new getKthItemAction(2))));
+	assertTrue("2".equals(Traversals.InorderTraversal(root, new getKthItemAction(3))));
+}

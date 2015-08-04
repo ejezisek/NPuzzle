@@ -9,12 +9,10 @@ body {
 img {
 	border: 0;
 }
-p {
-	text-align: center;
-}
+ 	
 #mainCode {
 	overflow: auto;
-	width: 500px;
+	width: 600px;
 }
 #subCode
 {
@@ -54,7 +52,7 @@ p {
 	background: url(../images/bg-menu.gif) repeat-x;
 	display: inline-block;
 	height: 40px;
-	width: 688px;
+	width: 950px;
 	list-style: none;
 	margin: 0;
 	padding: 4px 0 3px;
@@ -84,16 +82,7 @@ p {
 	color: #0a2d43;
 }
 
-/** Searchbar **/
-#search {
-	background: url(../images/bg-search.gif) no-repeat right bottom;
-	height: 47px;
-	width: 268px;
-	padding: 13px 0 0;
-	position: absolute;
-	bottom: -20px;
-	right: 0;
-}
+
 #search form {
 	display: inline-block;
 	margin: 0;
@@ -332,7 +321,6 @@ p {
 	margin-bottom: 10px;
 }
 #sidebar ul li span a {
-	background: url(../images/bg-comment.gif) no-repeat 7px 3px;
 	color: #fffffb;
 	display: inline-block;
 	height: 20px;

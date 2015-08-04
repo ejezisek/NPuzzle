@@ -2,22 +2,10 @@ var nodeList=[];
 var head;
 var nodeStack=[];
 var nodeNum;
-var nodes;
-var initialFill="#008CFF"
-var textFill="#FFFFFF"
-var activeFill="#110033"
-function reset()
-{
-	nodes=[];
-	head=null;
-	nodeList=[];
-	nodeStack=[];
-	$('canvas').removeLayers();
-}
 function initializeNodeState()
 {
 	var layers=$('canvas').getLayers();
-	nodes=[];
+	var nodes=[];
 	for(var k=0; k<nodeNum; k++)
 	{
 		nodes.push(layers[k]);
@@ -26,32 +14,20 @@ function initializeNodeState()
 	for(var i=0; i<nodeNum; i++)
 	{
 		layer=nodes[i];
-		layer.fillStyle=initialFill;
+		layer.fillStyle="#0000aa";
 		var indexLeft=(i+1)*2-1;
 		var indexRight=(i+1)*2;
-		if(indexLeft<nodeNum)
+		if(indexLeft<nodeNum)				
 		{
 			layer.left=nodes[indexLeft];
-			nodes[indexLeft].parent=layer;
 		}
 
 		if(indexRight<nodeNum)
 		{
 			layer.right=nodes[indexRight];
-			nodes[indexRight].parent=layer;
-		}
+		}			
 	}		
 	head=nodes[0];
-	nodeStack.push(head);
-}
-function refresh()
-{
-	nodeStack=[];
-	for(var i=0; i<nodeNum; i++)
-	{
-		layer=nodes[i];
-		layer.fillStyle=initialFill;
-	}
 	nodeStack.push(head);
 }
 function transmit()
@@ -60,22 +36,35 @@ function transmit()
 	{
 		traverse();
 	}
+	else if(head==null)
+	{
+		initializeNodeState();
+		transmit();
+	}
 	else
 	{
-		refresh();
+		head=null;
+		initializeNodeState();
 		$('canvas').drawLayers();
 	}
 }
-
 function traverse()
 {
 	var numCanTransmit=0;
 	if(nodeStack.length>0)
 	{
 		var val=nodeStack.pop();
-		val.fillStyle=activeFill;
+		val.fillStyle="#8800aa";
 		$('canvas').drawLayers();
-		numCanTransmit++;
+		
+
+		if(val.canTransmit)
+		{
+			numCanTransmit++;
+//			if(numCanTransmit>1)
+//				return false;
+		}
+
 		if(val.right!=null)
 		{
 			nodeStack.push(val.right);
@@ -85,9 +74,7 @@ function traverse()
 			nodeStack.push(val.left);
 		}
 	}
-
 }
-
 //width should be at least numNodes*1.5*radius+radius/2
 function drawCenteredTree(numNodes, radius, width)
 {
@@ -121,7 +108,6 @@ function drawCenteredTree(numNodes, radius, width)
 			y-=radius*4;	
 		}
 	}
-	
 	nodeList.reverse();
 	for(var i=0; i<numNodes; i++)
 	{
@@ -137,7 +123,7 @@ function drawCenteredTree(numNodes, radius, width)
 			item.right=nodeList[indexRight];
 		}
 	}
-	
+
 	var stack=[];
 	stack.push(nodeList[0]);
 	var index=0;
@@ -145,6 +131,7 @@ function drawCenteredTree(numNodes, radius, width)
 	{
 		var val=stack.pop();
 		applyText(index++, val);
+		
 		if(val.right!=null)
 		{
 			stack.push(val.right);
@@ -155,15 +142,78 @@ function drawCenteredTree(numNodes, radius, width)
 		}
 	}
 	$('canvas').drawLayers();
-    initializeNodeState();
-}
 
+}
+function drawTree(numNodes, radius)
+{
+	var start=0;
+	var numRows=Math.floor(Math.log(numNodes)/Math.log(2));
+	var y=5*numRows*radius;
+	var diff=radius/2;
+	var xStart=radius+diff+start;
+	var columnSize=numNodes-((1<<numRows)-1);
+	var xIncrease=radius*2+diff*2;
+	var x=xStart;
+	x+=xIncrease*(columnSize-1);x
+	for(var i=0; i<numNodes; i++)
+	{
+		var index=nodeList.length;
+		nodeList[index]=new drawNode(x,y, radius*2,i);
+		columnSize--;
+		x-=xIncrease;
+		if(columnSize==0)
+		{
+			xStart-=start;
+			xStart*=2;
+			xStart+=start;
+			numRows--;
+			columnSize=1<<numRows;
+			x=xStart;
+			xIncrease*=2;
+			x+=xIncrease*(columnSize-1);
+			y-=radius*4;	
+		}
+	}
+	nodeList.reverse();
+	for(var i=0; i<numNodes; i++)
+	{
+		var indexLeft=(i+1)*2-1;
+		var indexRight=(i+1)*2;
+		var item=nodeList[i];
+		if(indexLeft<numNodes)
+		{
+			item.left=nodeList[indexLeft];
+		}
+		if(indexRight<numNodes)
+		{
+			item.right=nodeList[indexRight];
+		}
+	}
+
+	var stack=[];
+	stack.push(nodeList[0]);
+	var index=0;
+	while(stack.length>0)
+	{
+		var val=stack.pop();
+		applyText(index++, val);
+		
+		if(val.right!=null)
+		{
+			stack.push(val.right);
+		}
+		if(val.left!=null)
+		{
+			stack.push(val.left);
+		}
+	}
+}
 function applyText(text, circle)
 {
 	$('canvas').drawText({
 		layer: true,
-		name: 'nodeText'+circle.id.toString(),
-		fillStyle: textFill,
+		fillStyle: '#FFFFFF',
+		groups: [circle.id.toString()],
 		x: circle.x,
 		y: circle.y,
 		intangible: true,
@@ -173,28 +223,11 @@ function applyText(text, circle)
 		draggable: false
 	})
 }
-function removeNode(node)
-{
-	if(node==null)
-	{
-		return
-	}
-	var id=node.id;
-	removeNode(node.left);
-	removeNode(node.right);
-	var name='node'+id.toString();
-    $('canvas').removeLayer('nodeText'+id.toString());
-	$('canvas').removeLayer(name);
-	refresh();
-}
 function drawNode(X,Y, radius, id)
 {
-	var name='node'+id.toString();
-
-	$('canvas').drawEllipse({
+	 $('canvas').drawEllipse({
 		  layer: true,
-		  name: name,
-		  fillStyle: initialFill,
+		  fillStyle: '#0000aa',
 		  x: X, y: Y,
 		  active: true,
 		  wait: false,
@@ -204,43 +237,57 @@ function drawNode(X,Y, radius, id)
 		  id: id,
 		  width: radius, height: radius,
 		  draggable: false,
-		  click: function(layer) {
-			  var par=$('canvas').getLayer('nodeText'+id.toString());
+		  disableTransmit: function(layer)
+		  {
+			 layer.canTransmit=false;  
+			 if(layer.active)
+				 layer.fillStyle='#000044';
+			 else
+				 layer.fillStyle='#000000';
+			$('canvas').drawLayers();
+		  },
+		  enableTransmit: function(layer)
+		  {
+			 layer.canTransmit=true;
+			 if(layer.active)
+				 layer.fillStyle='#0000aa';
+			 else
+				 layer.fillStyle='#000000';
+			$('canvas').drawLayers();
 
-			  for(var i in nodes)
-			  {
-				  if(nodes[i].id==id)
-			      {
-					  var removeN=nodes[i];
-			      }
-				  if(nodes[i].left!=null && nodes[i].left.id==id)
-				  {
-					  nodes[i].left=null;
-				  }
-				  if(nodes[i].right!=null && nodes[i].right.id==id)
-				  {
-					  nodes[i].right=null;
-				  }
-			  }
-			  removeNode(removeN)
-			  $('canvas').drawLayers();
+		  },
+		  disableClick: function(layer)
+		  {
+			  layer.click=null;
+			  alert('disabling click');
 		  }
+		  /* Clicking will be used for DCR disable it for the preorder traversal.
+		  ,
+		  click: function(layer)
+		  {
+			  /if(layer.dontDrag)
+			  {
+				  layer.dontDrag=false;
+				  return;  
+			  }
+			  layer.dontDrag=false;
+			  if(layer.active)
+			  {
+			      layer.fillStyle='#000000';  
+			  }
+			  else
+		      {				
+				  layer.fillStyle='#0000aa';
+		      }
+              $('canvas').drawLayers();			 
+			  layer.active=!layer.active;
+		  }
+		  */
 		});
 	this.x=X;
 	this.y=Y;
 	this.radius=radius;
 	this.id=id;
 }
-TotalWidth=500;
-/*
-(function(){
-   var c = $("#canvas");
-        ctx = c[0].getContext('2d');
 
-    $(function(){
-        // set width and height
-         ctx.canvas.height = TotalWidth;
-         ctx.canvas.width = TotalWidth;
-    });
-    
-})();*/
+drawCenteredTree(7,20, 225);
