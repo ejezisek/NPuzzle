@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>JEZ3 Software Development</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css" />	
+	<link href="css/nouislider.min.css" rel="stylesheet" />
+	
+	<!--[if lte IE 7]>
+		<link rel="stylesheet" href="css/ie.css" type="text/css" charset="utf-8" />	
+	<![endif]-->
+</head>
+  <link rel="stylesheet" href="css/jquery-ui.css">
+
+
+<body>
+	<div id="header">
+<div id="headerLink">
+			<a href="index.html" id="logo">Jezisek Software</a>
+		</div>		<div id="navigation">
+			<ul>
+				<li class="first"><a href="index.html">Home</a></li>
+				<li><a href="about.html">About us</a></li>
+				<li class="selected"><a href="blog.html">Blog</a></li> 
+			</ul>
+		</div>
+	</div> <!-- /#header -->
+	<div id="contents">
+		<div class="background">
+			<div id="blogs">
+				<div class="sidebar">
+					<div class="posts">
+						<h3>Recent Posts</h3>
+						<ul>
+							<li><a href="blog.html">Traversing a Tree - Inorder Traversal </a></li>
+						</ul>
+					</div>
+					<div class="archives">
+						<h3>Archives</h3>
+						<ul>
+							<li><a href="blog.html">August - 2015</a></li>
+						
+<!-- 	<li><a href="">December</a></li>
+							<li><a href="">June</a></li>
+							<li><a href="">November</a></li>
+							<li><a href="">May</a></li>
+							<li><a href="">October</a></li>
+							<li><a href="">April</a></li>
+							<li><a href="">September</a></li>
+							<li><a href="">March</a></li>
+							<li><a href="">August</a></li>
+							<li><a href="">February</a></li>
+							<li><a href="">July</a></li>
+							<li><a href="">January</a></li>
+							 -->					
+						</ul>
+					</div>
+				</div>
+				<div class="section">
+					<h2>Solving the 15 Puzzle </h2>
+					<p>
+					This article is about solving the 15 puzzle.  It will approach various ways of solving the fifteen problems 
+					and how to improve them.  It will initially discuss a brute force approach followed by using djikstra's algorithm
+					and then utilizing A* to make djikstra's algorithm a little faster.  Finally parity will be discussed with 
+					regards to figuring out whether or not the puzzle can be solved.  Approximately 50% of 15 puzzles cannot be solved 
+					due to the parity of the board.
+					<h2>Description of the 15 puzzle</h2>
+					<p>
+						"The Fifteen Puzzle is comprised of 15 numbered puzzle pieces 
+						contained in a small 4x4 box that allows each of the numbers to slide around freely based on the fact that 
+						there is always an empty space somewhere on the puzzle board." [1]  The goal of the 15 puzzle is to make all
+						of the numbered puzzle pieces appear in order.  It is not always possible to do so and as such, a reward was offered
+						for the solution of an impossible puzzle.
+					</p>
+					<h2>Generating a 15 Puzzle</h2>
+					<p>
+						Please note that we are only dealing with the numbers 1-15.  
+						As such, it only makes sense to create the puzzle with bytes as opposed to integers.
+						In the code to generate the sliding puzzle, we ensure that it is able to move various directions and
+						that it records each move that is made.  The code for the sliding square and 
+						the methods to solve it can be accessed <a href=blogSourceCode/slidingSquareSrc.zip>here</a>.
+					</p>
+<h3>Solving the 15 puzzle an initial approach - Brute Force</h3>
+<p>
+	Brute force is the easiest way to solve the 15 puzzle.  However, it is also the slowest way to solve the puzzle. 
+	It also is unable to figure out whether or not a puzzle is solvable or not.
+	It simply goes through every possible point until a solution is found.  It will even go through duplicate points.  
+	This solution is acceptable for incredibly small puzzles that are solvable, but is simple to improve.  Since this method will in some cases
+	never complete, the run time is infinite.
+	Below is the solution for the brute force method:
+</p>
+<pre class="prettyprint linenums" id="mainCode">
+/**
+ * Takes in a sliding square and returns the directions
+ * taken to solve it.
+ * @param sq
+ * @return
+ */
+public static List&ltSlidingSquare.DIRECTION&gt 
+	solveSlidingSquare_BruteForce(SlidingSquare sq)
+{
+	Queue&ltSlidingSquare&gt q=new LinkedList&ltSlidingSquare&gt();
+	q.add(sq);
+	while(!q.isEmpty())
+	{
+		SlidingSquare ms=q.poll();
+		for(SlidingSquare.DIRECTION d : SlidingSquare.DIRECTION.values())
+		{
+			SlidingSquare moved=ms.move(d);
+			if(moved==null) 
+				continue;
+			if(!moved.isSolved())
+			{
+				q.add(moved);
+			}
+			else
+				return moved.getPreviouslyVisited();
+		}
+	}
+	return null;
+}
+</pre>
+<h3>Solving the 15 puzzle an initial approach - Storing Visited Nodes</h3>
+<p>
+The above solution does not keep track of visited nodes and will thus repeatedly access the same node and attempt to
+iterate through it.  This leads to a slow algorithm at best and an algorithm that never finishes at worst.  As such, to 
+solve this problem more efficiently, we keep track of already visited nodes and ignore them!  The required code changes to perform this change 
+are highlighted in yellow.
+</p>
+<pre class="prettyprint linenums" id="mainCode">
+/**
+ * Takes in a sliding square and returns the directions
+ * taken to solve it.
+ * @param sq
+ * @return
+ */
+public static List&ltSlidingSquare.DIRECTION&gt solveSlidingSquare_BFS(SlidingSquare sq)
+{
+	<FONT style="BACKGROUND-COLOR: yellow">Set&ltSlidingSquare&gt visitedSquares=new HashSet&ltSlidingSquare&gt();</FONT>
+	Queue&ltSlidingSquare&gt q=new LinkedList&ltSlidingSquare&gt();
+	q.add(sq);
+	while(!q.isEmpty())
+	{
+		SlidingSquare ms=q.poll();
+		for(SlidingSquare.DIRECTION d : SlidingSquare.DIRECTION.values())
+		{
+			SlidingSquare moved=ms.move(d);
+			if(moved==null) 
+				continue;
+			if(!moved.isSolved())
+			{
+				<FONT style="BACKGROUND-COLOR: yellow">if(!visitedSquares.contains(moved))</FONT>
+					{
+						<FONT style="BACKGROUND-COLOR: yellow">visitedSquares.add(ms);</FONT>
+						q.add(moved);						
+					}
+			}
+			else
+				return moved.getPreviouslyVisited();
+		}
+	}
+	return null;
+}
+</pre>
+<h3>Solving the 15 puzzle an initial approach - Utilizing A*</h3>
+<p>
+	To use A* we have to create a heuristic to guess the minimum number of moves each set has to complete.  After guessing the minimum number, which in this case will
+	always be less than or equal to the actual minimum, we add each element to a priority queue.  We then grab the smallest number in the priority queue.
+</p>
+<h4>Choosing a heuristic</h4>
+<p>
+	There are multiple heuristic's to choose from.  The simplest heuristic is the Manhattan distance.  
+	The Manhattan distance simply calculates the sum of every point's taxi cab distance from its current
+	position to its destination.  A taxi-cab distance is the absolute sum of the cartesian coordinates
+	between the two points.  This heuristic is still slow, but it is a starting point for many of the slightly more
+	complex heuristics needed to efficiently solve this problem.
+</p>
+
+					<h2>References</h2>
+					<p>
+					1.  <a href=http://www.chessandpoker.com/fifteen-puzzle-solution.html>http://www.chessandpoker.com/fifteen-puzzle-solution.html</a><br>
+					</p>
+				</div>
+			</div>
+		</div>
+		</div>
+<div id="footer">
+		<ul class="contacts">
+			<h3>Contact Us</h3>
+			<li><span>Email</span><p>: help@jeziseksoftware.com</p></li>
+		</ul>
+		<ul id="connect">
+			<h3>Get Updated</h3>
+			<li><a href="blog.html">Blog</a></li>
+			<li><a href="https://www.facebook.com/JEZ3Apps" target="_blank">Facebook</a></li>
+		</ul>
+		<span class="footnote">&copy; Copyright &copy; 2015. All rights reserved</span>
+	</div> <!-- /#footer -->
+	<script type="text/javascript" src="MathJax-2.5-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+	<script src="Javascript/run_prettify.js"></script>
+	<script src="Javascript/nouislider.min.js"></script>
+	<script src="Javascript/jquery-1.11.2.min.js"></script>
+<script src="Javascript/jcanvas.min.js"></script>
+
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="Javascript/inorderTraversal.js"></script>
+  
+</body>
+</html>

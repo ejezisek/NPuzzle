@@ -9,7 +9,7 @@ body {
 img {
 	border: 0;
 }
- 	
+
 #mainCode {
 	overflow: auto;
 	width: 600px;
@@ -19,17 +19,20 @@ img {
 	overflow: auto;
 	width: 300px;
 }
+pre {-moz-tab-size: 2;} /* Code for Firefox */
+pre {-o-tab-size: 2;} /* Code for Opera 10.6-12.1 */
+pre {tab-size: 2;}
 /*------------------------------ HEADER ------------------------------*/
 #header {
 	width: 960px;
 	margin: 0 auto;
-	padding: 40px 0;
+	padding:  0px 0;
 	position: relative;
 
 }
 #headerLink a
 	{
-	font-size:60px;
+	font-size:30px;
 	text-decoration: none;
 	color: #FFFFFF;
 	}
@@ -112,10 +115,40 @@ img {
 	padding: 0;
 }
 
+
+/* Scroll Bar*/
+.scrollbar
+{
+    display: table;
+    margin: 0 auto;
+    width:330px;
+    font-size:12px;
+	text-align: center;
+
+}
+#blogItem
+{
+	height: 150px;
+	overflow:hidden;
+	cursor:pointer;
+	margin: 3px;
+	border-style: dashed;
+    border-width: 2px;
+}
+
+.scrollbar img
+{
+    display: table;
+    margin: 0 auto;
+	width: 100px;
+	height: 100px;
+	
+}
+
 /** Adbox **/
 #adbox {
 	background-color: #ffffff;
-	height: 340px;
+	height: 400px;
 	padding: 20px 0 0;
 }
 #adbox p {
@@ -125,18 +158,18 @@ img {
 	width: 960px;
 	margin: 0 auto 0;
 }
-#adbox div.images {
+#adbox div.blog {
 	float: right;
 	display: inline-block;
-	height: 281px;
+	height: 601px;
 	width: 710px;
 	overflow: hidden;
 }
-#adbox div.images img.preview {
+#adbox div.blog img.preview {
 	float: left;
 	margin-right: 2px;
 }
-#adbox div.images img.last {
+#adbox div.blog img.last {
 	position: relative;
 	top: -2px;
 }
