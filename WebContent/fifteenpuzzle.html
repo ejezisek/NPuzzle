@@ -173,10 +173,21 @@ public static List&ltSlidingSquare.DIRECTION&gt solveSlidingSquare_BFS(SlidingSq
 	There are multiple heuristic's to choose from.  The simplest heuristic is the Manhattan distance.  
 	The Manhattan distance simply calculates the sum of every point's taxi cab distance from its current
 	position to its destination.  A taxi-cab distance is the absolute sum of the cartesian coordinates
-	between the two points.  This heuristic is still slow, but it is a starting point for many of the slightly more
-	complex heuristics needed to efficiently solve this problem.
+	between the two points.  This heuristic is still somewhat slow, but it is a starting point for many of the slightly more
+	complex heuristics needed to efficiently solve this problem.  However, this is able to solve the 15 puzzle.
 </p>
 
+<h5>Speeding up the heuristic</h5>
+<p>
+	When I created my IDA* Heuristic it was initially rather slow.  Therefore I used a profiler to investigate the bottlenecks.
+	The profiler I used was <a href=https://visualvm.java.net/eclipse-launcher.html>Visual VM</a>.
+	The first bottleneck I saw was actually a mess up in my program.  I accidentally typed a semicolon immediately following an if statement.
+	IE: if(!visitedNodes.contains(node));  Fixing this was rather simple.  However following the semicolon mistake, the constructor for the sliding squares 
+	took too long to create.  This was because the constructor was inefficient at copying the previous sliding square.  To fix this, I had to change from a 2d array
+	to a single dimensioned array.  Oddly enough, I think this change actually made the logic in the program simpler!  This copy constructor could possibly be sped up by using a long as opposed 
+	to an array of bytes.  However, the speedup that could be seen from this is expected to be small.  Note, when copying arrays of primitive data-types use clone() to copy at a fast rate.  The current bottleneck in the code is
+	based on finding previous nodes.  This could be improved with a hashmap, but I could not figure out a way to implement this fix without decreasing code quality.
+</p>
 					<h2>References</h2>
 					<p>
 					1.  <a href=http://www.chessandpoker.com/fifteen-puzzle-solution.html>http://www.chessandpoker.com/fifteen-puzzle-solution.html</a><br>
