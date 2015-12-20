@@ -1,0 +1,1 @@
+127.0.0.1 - - [09/Aug/2015:19:18:37 -0400] "GET /JEZ3_Apps/blogSourceCode/slidingSquareSrc.zip HTTP/1.1" 200 5057

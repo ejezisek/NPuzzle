@@ -1,0 +1,103 @@
+package generatePatternDatabase;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class PatternDBSlidingSquareTrie {
+	private byte [] connectedByteNodes=new byte[600_000_000];
+	public static int getIndex(long values)
+	{
+		return getIndex(PatternDBSlidingSquareTrieFlyweight.convertToBytes(values));
+	}
+	
+	public static int getIndex(byte[] values)
+	{
+		byte [] valuesCopy=values.clone();
+		int[] availableValues={0,1,2,3,4,5,7,8};
+		int actualIndex=0;
+		int multiplier=16;
+		for(int val:availableValues)
+		{
+			actualIndex*=multiplier--;
+			int i=0;
+			for(int index=0; index<valuesCopy.length; index++)
+			{
+				if(valuesCopy[index]!=-1)
+					i++;
+				if(val==valuesCopy[index])
+				{
+					valuesCopy[index]=-1;
+					break;
+				}
+			}
+			actualIndex+=i;
+		}
+
+		return actualIndex;
+	}
+	public static byte[] toBytes(int index)
+	{
+		int value=8;
+		byte[] vals=new byte[8];
+		int byteIndex=0;
+		for(int i=value; i<16;)
+		{
+			byte currByte=(byte)(index%value);
+			vals[byteIndex]=currByte;
+			i++;
+			index/=i;
+		}
+		for(int i=0; i<vals.length; i++)
+		{
+			byte current=vals[i];
+			for(int j=0; j<i; j++)
+			{
+				if(current>vals[j])
+				{
+					vals[i]++;
+				}
+			}
+		}
+		byte [] ret=new byte[16];
+		for(int i=0; i<16; i++)
+			ret[i]=6;
+		byte[] availableValues={0,1,2,3,4,5,7,8};
+		int j=0;
+		for(byte val:vals)
+			ret[val]=availableValues[j++];
+		return vals;
+	}
+	public void addNode(byte[] vals, byte value)
+	{
+		int index=getIndex(vals);
+		connectedByteNodes[index]=(byte) (value+1);
+	}
+	public boolean exists(byte[] vals)
+	{
+		int index=getIndex(vals);
+		return connectedByteNodes[index]!=0;
+	}
+	public byte get(byte[] vals)
+	{
+		int index=getIndex(vals);
+		return (byte) (connectedByteNodes[index]-1);
+	}
+	public byte get(int val)
+	{
+		return (byte) (connectedByteNodes[val]-1);
+
+	}
+	public void write() {
+		String filename = "/home/edward/Research/generatePatternDBFiles/results.out";
+			try {
+				Files.write(Paths.get(filename), connectedByteNodes);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+
+	}
+	
+}

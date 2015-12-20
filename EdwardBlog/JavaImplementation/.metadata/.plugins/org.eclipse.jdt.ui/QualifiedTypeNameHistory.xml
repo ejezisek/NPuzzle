@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.xml.soap.Node"/>
+<fullyQualifiedTypeName name="Traversals.Action"/>
+<fullyQualifiedTypeName name="Traversals.Node"/>
+<fullyQualifiedTypeName name="Main.MagicSquare.DIRECTION"/>
+<fullyQualifiedTypeName name="IDAStarMain.LinearConflict"/>
+<fullyQualifiedTypeName name="IDAStar.Heuristic"/>
+<fullyQualifiedTypeName name="junit.framework.Assert"/>
+<fullyQualifiedTypeName name="ed.util.algorithms.Node"/>
+<fullyQualifiedTypeName name="java.util.TreeSet"/>
+<fullyQualifiedTypeName name="java.util.Comparator"/>
+<fullyQualifiedTypeName name="ed.util.algorithms.Common.Goal"/>
+<fullyQualifiedTypeName name="ed.util.algorithms.Common.Heuristic"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="SlidingSquare"/>
+<fullyQualifiedTypeName name="SlidingSquare.DIRECTION"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="ed.util.algorithms.TreeTraversals"/>
+<fullyQualifiedTypeName name="javax.swing.text.Document"/>
+<fullyQualifiedTypeName name="org.bson.Document"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="com.mongodb.util.JSON"/>
+</qualifiedTypeNameHistroy>

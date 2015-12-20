@@ -1,0 +1,20 @@
+package generatePatternDatabase;
+
+public class SquareLookup {
+
+	private int N;
+	private int K;
+	/**
+	 * 
+	 * @param N - Represents the number of squares represented by the filename.
+	 */
+	public SquareLookup(int N, int squareSize)
+	{
+		this.N=N;
+		this.K=squareSize-N;
+	}
+	public String location(long val)
+	{
+		
+	}
+}

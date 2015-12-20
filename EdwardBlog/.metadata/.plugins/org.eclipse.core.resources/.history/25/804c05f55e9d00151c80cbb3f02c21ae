@@ -1,0 +1,42 @@
+package generatePatternDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class FileBasedPriorityQueue {
+	private HashMap<Integer, List<PQItem>> items;
+	private int currentLength;
+	int queueSize=0;
+	int maxIndex=0;
+	public FileBasedPriorityQueue(String queueDirectory)
+	{
+		currentLength=0;
+		items=new HashMap<Integer, List<PQItem>>();	
+	}
+	public void add(PQItem pq)
+	{
+		List<PQItem> pqList=items.get(pq.numInSquare);
+		if(pqList==null)
+		{
+			pqList=new ArrayList<PQItem>();
+			items.put(pq.numInSquare, pqList);
+		}
+		pqList.add(pq);
+		queueSize++;
+	}
+	public PQItem poll()
+	{
+		List<PQItem> pqList=items.get(currentLength);
+		if(pqList.size()>0)
+		{
+			PQItem ret=pqList.get(pqList.size()-1);
+			pqList.remove(pqList.size()-1);
+			return ret;
+		}
+		else
+		{
+			//Read in up to 20 Million entries.
+		}
+	}
+}

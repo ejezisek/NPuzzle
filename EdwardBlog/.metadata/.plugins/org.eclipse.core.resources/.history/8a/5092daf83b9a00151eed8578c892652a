@@ -1,0 +1,77 @@
+package generatePatternDatabase;
+
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+import ed.util.algorithms.Action;
+
+public class Main {
+
+    public static  Boolean BFS(PatternDBSlidingSquareNode head, Action<PatternDBSlidingSquareNode, Boolean> action)
+    {
+    	Queue<Integer> q=new LinkedList<Integer>();
+    	PatternDBSlidingSquareTrieFlyweight.COLLECTION.add(head.getSquares(), (byte) head.getNumInRoute());
+    	q.add(PatternDBSlidingSquareTrie.getIndex(head.getSquares()));
+    	int distance=0;
+    	while(true)
+    	{
+    		if(q.isEmpty())
+    		{
+    			break; 
+    		}
+    		PatternDBSlidingSquareNode currentNode=new PatternDBSlidingSquareNode(q.poll());
+    		action.performAction(currentNode);
+    		if(action.complete())
+    			return action.getValue();
+    		for(PatternDBSlidingSquareNode val:currentNode.getChildren())
+    		{
+    			if(val.getNumInRoute()!=distance)
+    			{
+    				distance=val.getNumInRoute();
+    				System.out.println(distance);
+    			}
+    			if(!PatternDBSlidingSquareTrieFlyweight.COLLECTION.exists(val.getSquares()))
+    			{
+    				PatternDBSlidingSquareTrieFlyweight.COLLECTION.add(val.getSquares(), (byte)val.getNumInRoute());
+    		    	q.add(PatternDBSlidingSquareTrie.getIndex(val.getSquares()));
+    			}
+    		}
+    	}
+    	PatternDBSlidingSquareTrieFlyweight.COLLECTION.write();
+    	return action.getValue();
+    }
+    static long index=0;
+
+	public static void main(String[] args) {
+
+		byte[] vals={1,2,3,4,5,6,6,6,7,6,6,6,8,6,6,0};
+		PatternDBSlidingSquareUsingLong startingPos=new PatternDBSlidingSquareUsingLong((byte)4,(byte)4, vals);
+		System.out.println(startingPos);
+		PatternDBSlidingSquareNode pdssn=new PatternDBSlidingSquareNode(startingPos);
+	//	System.out.println(startingPos);
+		Action<PatternDBSlidingSquareNode, Boolean> action=new Action<PatternDBSlidingSquareNode, Boolean>()
+		{
+	
+			int i=0;
+			@Override
+			public void performAction(PatternDBSlidingSquareNode node) {
+				if(i++%1000000==0)
+					System.out.println(i);
+			}
+
+			@Override
+			public boolean complete() {
+				return false;
+			}
+
+			@Override
+			public Boolean getValue() {
+				return null;
+			}
+
+		};
+		Main.BFS(pdssn, action);
+	}
+
+}

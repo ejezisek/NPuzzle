@@ -1,0 +1,22 @@
+package generatePatternDatabase;
+
+import java.util.HashMap;
+import java.util.List;
+
+public class FileBasedPriorityQueue {
+	private HashMap<Integer, List<PQItem>> items;
+	private int currentLength;
+	public FileBasedPriorityQueue()
+	{
+		currentLength=0;
+		items=new HashMap<Integer, List<PQItem>>();	
+	}
+	public void add(PQItem pq)
+	{
+		if(items.get(index))
+	}
+	public PQItem poll()
+	{
+		
+	}
+}

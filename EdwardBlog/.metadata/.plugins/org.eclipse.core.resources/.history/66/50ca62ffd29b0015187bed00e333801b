@@ -1,0 +1,67 @@
+package generatePatternDatabase;
+
+public class PatternDBSlidingSquareTrieFlyweight {
+	private PatternDBSlidingSquareCollection trie;
+	private byte height;
+	private byte width;
+
+	public PatternDBSlidingSquareTrieFlyweight(byte height, byte width, int [] values)
+	{
+		trie=new PatternDBSlidingSquareCollection(values, height, width);
+		this.height=height;
+		this.width=width;
+	}
+	public byte getHeight() {
+		return height;
+	}
+	public byte getWidth() {
+		return width;
+	}
+	public boolean exists(byte [] vals)
+	{
+		if(vals.length!=height*width)
+			return false;
+		else
+		{
+			return trie.exists(vals);
+		}
+	}
+	public static byte[] convertToBytes(long square, byte height, byte width)
+	{
+		byte[] vals=new byte[height*width];
+		for(int i=0; i<vals.length; i++)
+		{
+			vals[i]=(byte)(square&0x0F);
+			square>>>=4;
+		}
+		return vals;
+	}
+	public byte[] convertToBytes(long square)
+	{
+		return convertToBytes(square, height, width);
+	}
+	
+	public boolean exists(long square)
+	{
+			return exists(convertToBytes(square));
+	}
+
+	public void add(long square, Byte value)
+	{
+		add(convertToBytes(square), value);
+	}
+	public void add(byte [] vals, Byte value)
+	{
+		trie.addNode(vals, value);
+	}
+	public void write(String filename) {
+		trie.write(filename);
+	}
+	public int get(Integer i) {
+		return trie.get(trie.toBytes(i));
+	}
+	public PatternDBSlidingSquareCollection getTrie() {
+		// TODO Auto-generated method stub
+		return trie;
+	}
+}

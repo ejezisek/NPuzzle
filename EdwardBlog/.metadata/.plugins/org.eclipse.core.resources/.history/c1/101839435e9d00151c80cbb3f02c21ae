@@ -1,0 +1,30 @@
+package generatePatternDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class FileBasedPriorityQueue {
+	private HashMap<Integer, List<PQItem>> items;
+	private int currentLength;
+	public FileBasedPriorityQueue()
+	{
+		currentLength=0;
+		items=new HashMap<Integer, List<PQItem>>();	
+	}
+	public void add(PQItem pq)
+	{
+		List<PQItem> pqList=items.get(pq.numInSquare);
+		if(pqList==null)
+		{
+			pqList=new ArrayList<PQItem>();
+			items.put(pq.numInSquare, pqList);
+		}
+		pqList.add(pq);
+	}
+	public PQItem poll()
+	{
+		List<PQItem> pqList=items.get(currentLength);
+		pqList.get(pqList.size()-1);
+	}
+}

@@ -1,0 +1,26 @@
+INDEX VERSION 1.127+/home/ejezisek/Web Development/EdwardBlog/JavaImplementation/.metadata/.plugins/org.eclipse.jdt.core
+742522455.index
+4038417773.index
+120211678.index
+3214207201.index
+1226356579.index
+1739499602.index
+527624335.index
+3888198363.index
+46282419.index
+1932949083.index
+2630498905.index
+83653881.index
+1913109094.index
+2841451250.index
+4063262877.index
+3885805113.index
+2458131591.index
+4177448342.index
+578299247.index
+3721837726.index
+587044797.index
+2982035129.index
+2771403403.index
+2233963263.index
+2066489604.index
