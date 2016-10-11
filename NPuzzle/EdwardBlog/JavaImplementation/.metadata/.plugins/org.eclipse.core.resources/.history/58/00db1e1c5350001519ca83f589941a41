@@ -1,0 +1,83 @@
+import java.util.Date;
+import java.util.List;
+
+public class IDAStarMain {
+	public static class ManhattanDistanceHeuristic implements IDAStar.Heuristic<SlidingSquareNode>
+	{
+		private int getDifference(int i, int j, int value, int columns, int height)
+		{
+			//Convert the value to i and j coordinates.
+			int valuei;
+			int valuej;
+			if(value!=0)
+			{
+				valuei=(value-1)/columns;
+				valuej=(value-1)%(columns);
+			}
+			else
+			{
+				return 0;
+			}
+			return Math.abs(valuei-i)+Math.abs(valuej-j);
+		}
+		@Override
+		public int getHeuristic(SlidingSquareNode item) {
+			byte[] squares=item.getSquares();
+			int heuristicsum=0;
+			int height=item.getHeight();
+			int width=item.getWidth();
+
+			for(int i=0; i<squares.length; i++)
+			{
+				heuristicsum+=getDifference(i/width,i%width, squares[i], width, height);
+			}
+			return heuristicsum;
+		}	
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new Date());
+		SlidingSquareNode b=new SlidingSquareNode((byte)4,(byte)4);
+
+		System.out.println(b);
+		if(!b.isSolvable())
+		{
+			System.out.println("NOT SOLVABLE");
+			return;
+		}
+		System.out.println(b.getCommaDelimited());
+		IDAStar.Heuristic<SlidingSquareNode> h=new ManhattanDistanceHeuristic();
+		System.out.println(h.getHeuristic(b));
+		IDAStar.IDAStarRet<SlidingSquareNode> res=IDAStar.IDA_Star(b, new ManhattanDistanceHeuristic(), new IDAStar.Goal<SlidingSquareNode>() {
+			@Override
+			public boolean isGoal(SlidingSquareNode n) {
+				// TODO Auto-generated method stub
+				return n.isSolved();
+			}
+
+		});
+		switch(res.getSearchReturn())
+		{
+			case BOUND:
+				break;
+			case FOUND:
+				//List<SlidingSquareNode> visited=res.getVisitedNodes();
+				//System.out.println(visited.size());
+				//for(SlidingSquareNode i:visited)
+				//	System.out.println(i);
+				List<SlidingSquareNode> visited=res.getVisitedNodes();
+				System.out.println(visited.size());
+				for(SlidingSquareNode v:visited)
+					System.out.println(v);
+				break;
+			case NOT_FOUND:
+				System.out.println("Unable to find.");
+				//visited=res.getVisitedNodes();
+				//for(SlidingSquareNode i:visited)
+				//	System.out.println(i);
+				break;
+		}
+		System.out.println(new Date());
+	}
+
+}

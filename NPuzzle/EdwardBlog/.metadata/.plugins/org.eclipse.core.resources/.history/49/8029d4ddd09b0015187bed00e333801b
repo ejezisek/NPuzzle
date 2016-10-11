@@ -1,0 +1,17 @@
+package generatePatternDatabase;
+
+import java.io.RandomAccessFile;
+
+import org.junit.Test;
+
+public class Access9Square {
+
+	@Test
+	public void test() {
+		String filename = "/home/edward/Research/generatePatternDBFiles/9Squareresults.out";
+		RandomAccessFile f=new RandomAccessFile(filename, "r");
+		byte [] bytes=new byte[(int) f.length()];
+		f.readFully(bytes);
+	}
+
+}

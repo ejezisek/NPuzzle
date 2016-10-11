@@ -1,0 +1,56 @@
+package generatePatternDatabase;
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+import ed.util.algorithms.Action;
+
+public class FifteenSquareBFS {
+    public static  Boolean BFS(PatternDBSlidingSquareNode head, Action<PatternDBSlidingSquareNode, Boolean> action, int[] availableValues, String filename)
+    {
+
+    	PatternDBSlidingSquareTriePrototype prototype=new PatternDBSlidingSquareTriePrototype(head.getHeight(), head.getWidth(), availableValues);
+    	prototype.add(head.getSquares(), (byte) head.getNumInRoute());
+    	PatternDBSlidingSquareCollection trie=prototype.getTrie();
+    	PriorityQueue<PQItem> q=new PriorityQueue<PQItem>(new Comparator<PQItem>()
+    	{
+			@Override
+			public int compare(PQItem o1, PQItem o2) {
+				// TODO Auto-generated method stub
+				return o1.numInSquare-o2.numInSquare;
+			}
+
+	
+    	});
+    	q.add(new PQItem(trie.getIndex(head.getSquares()), (byte)head.getNumInRoute(), head.getZeroPosition()));
+    	int distance=0;
+    	while(true)
+    	{
+    		if(q.isEmpty())
+    		{
+    			break; 
+    		}
+    		PQItem curr=q.poll();
+    		PatternDBSlidingSquareNode currentNode=new PatternDBSlidingSquareNode(curr.squareVal, prototype, curr.zeroPosition);
+    		action.performAction(currentNode);
+    		if(action.complete())
+    			return action.getValue();
+    		for(PatternDBSlidingSquareNode val:currentNode.getChildren())
+    		{
+
+    			if(!prototype.exists(val.getSquares()))
+    			{
+        			if(val.getNumInRoute()>distance || val.getNumInRoute()<distance-1)
+        			{
+        				distance=val.getNumInRoute();
+        				System.out.println(distance);
+        			}
+    				prototype.add(val.getSquares(), (byte)val.getNumInRoute());
+    		    	q.add(new PQItem(trie.getIndex(val.getSquares()), (byte)val.getNumInRoute(), val.getZeroPosition()));
+    			}
+    		}
+    	}
+    	prototype.write(filename);
+    	return action.getValue();
+    }
+}

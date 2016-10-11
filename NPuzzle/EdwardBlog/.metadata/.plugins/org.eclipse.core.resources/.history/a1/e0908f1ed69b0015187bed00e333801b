@@ -1,0 +1,13 @@
+import ed.util.algorithms.Common;
+
+public enum HeuristicFactory {
+	MANHATTANDISTANCE, MANHATTANDISTANCEWITHLINEARCONFLICT, PATTERNDATABASE;
+	private HeuristicFactory()
+	{
+		
+	}
+	public Common.Heuristic<SlidingSquareNode> get()
+	{
+		
+	}
+}

@@ -1,0 +1,36 @@
+import java.io.IOException;
+
+import ed.util.algorithms.Common;
+
+public enum HeuristicFactory {
+	MANHATTANDISTANCE, MANHATTANDISTANCEWITHLINEARCONFLICT, PATTERNDATABASE;
+	private HeuristicFactory()
+	{
+		
+	}
+	public Common.Heuristic<SlidingSquareNode> get()
+	{
+		switch(this)
+		{
+		case MANHATTANDISTANCE:
+			return new IDAStarMain.ManhattanDistanceHeuristic();
+		case MANHATTANDISTANCEWITHLINEARCONFLICT:
+			return new IDAStarMain.ManhattanDistanceWithLinearConflict();
+		case PATTERNDATABASE:
+			String fifteenFile="/home/edward/Research/generatePatternDBFiles/15Squareresults.out";
+			String nineFile="/home/edward/Research/generatePatternDBFiles/9Squareresults.out";
+			IDAStarMain.NineSquarePatternDatabase_Byte n;
+			try {
+				n = new IDAStarMain.NineSquarePatternDatabase_Byte(IDAStarMain.getBytesFromFile(nineFile));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+			return new IDAStarMain.FifteenSquarePatternDatabase_Byte(IDAStarMain.getBytesFromFile(fifteenFile), n);
+		default:
+			return null;
+		
+		}
+	}
+}

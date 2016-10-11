@@ -1,0 +1,66 @@
+package generatePatternDatabase;
+
+public class LargeByteArray {
+	private byte [][] byteArrays;
+	public static final int MAXARRAYSIZE=1_000_000_000;
+	public LargeByteArray(long value)
+	{
+		int numByteArrays=(int)(value/MAXARRAYSIZE);
+		byteArrays=new byte[numByteArrays][];
+		
+		for(int i=0; i<numByteArrays; i++)
+		{
+			if(value>MAXARRAYSIZE)
+			{
+				value-=MAXARRAYSIZE;
+				byteArrays[i]=new byte[MAXARRAYSIZE];
+			}
+			else
+			{
+				byteArrays[i]=new byte[(int)value];
+			}
+		}
+	}
+	
+	public void set(int index, byte value)
+	{
+		if(index>0)
+		{
+			if(index>MAXARRAYSIZE)
+			{
+				int leftArrayIndex=index/MAXARRAYSIZE;
+				int rightArrayIndex=(index-MAXARRAYSIZE*leftArrayIndex);
+				byteArrays[leftArrayIndex][rightArrayIndex]=value;
+			}
+			else
+			{
+				byteArrays[0][index]=value;
+			}
+		}
+		else
+		{
+			int newIndex=index-Integer.MIN_VALUE+Integer.MAX_VALUE%MAXARRAYSIZE;
+			int leftArrayIndex=Integer.MAX_VALUE/MAXARRAYSIZE;
+			if(newIndex>MAXARRAYSIZE)
+			{
+				leftArrayIndex+=newIndex/MAXARRAYSIZE;
+				int rightArrayIndex=(newIndex-MAXARRAYSIZE*leftArrayIndex);
+				byteArrays[leftArrayIndex][rightArrayIndex]=value;
+			}
+			byteArrays[newIndex][newIndex]=value;
+		}
+	}
+	
+	public byte get(int index)
+	{
+		if(index>0)
+		{
+			return byteArrays[0][index];
+		}
+		else
+		{
+			int newIndex=index-Integer.MIN_VALUE;
+			return byteArrays[0][newIndex];
+		}
+	}
+}

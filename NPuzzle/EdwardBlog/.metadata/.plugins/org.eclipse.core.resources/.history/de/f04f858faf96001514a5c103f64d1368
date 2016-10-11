@@ -1,0 +1,13 @@
+package generatePatternDatabase;
+
+public class SquareLookup {
+
+	/**
+	 * 
+	 * @param N - Represents the number of squares represented by the filename.
+	 */
+	public SquareLookup(int N)
+	{
+		
+	}
+}

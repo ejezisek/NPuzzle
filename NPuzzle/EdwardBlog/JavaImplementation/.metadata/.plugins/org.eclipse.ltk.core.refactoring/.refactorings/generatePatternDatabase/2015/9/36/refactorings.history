@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;generatePatternDatabase.SlidingSquare&apos; to &apos;PatternDBSlidingSquare&apos;&#x0A;- Original project: &apos;generatePatternDatabase&apos;&#x0A;- Original element: &apos;generatePatternDatabase.SlidingSquare&apos;&#x0A;- Renamed element: &apos;generatePatternDatabase.PatternDBSlidingSquare&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;SlidingSquare&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;generatePatternDatabase{SlidingSquare.java[SlidingSquare" matchStrategy="1" name="PatternDBSlidingSquare" qualified="false" references="true" similarDeclarations="false" stamp="1441253114584" textual="false" version="1.0"/>
+</session>

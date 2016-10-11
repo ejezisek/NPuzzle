@@ -1,0 +1,44 @@
+package generatePatternDatabase;
+
+public class SquareLookup {
+
+	private int N;
+	private int K;
+	/**
+	 * 
+	 * @param N - Represents the number of squares represented by the filename.
+	 */
+	public SquareLookup(int N, int squareSize)
+	{
+		this.N=N;
+		this.K=squareSize-N;
+	}
+
+	public static String longToFileString(long squareCopy)
+	{
+		int width=4;
+		int height=4;
+		StringBuilder sb=new StringBuilder();
+		for(int i=0; i<width*height; i++)
+		{
+			byte val=(byte)(squareCopy&0x0F);
+			squareCopy>>>=4;
+			sb.append(val);
+		}
+		return sb.toString();
+	}
+	public final static char [] validChars={'A','B','C','D','E','F','G','H','I','J',
+			'K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+			'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r',
+			's','t','u','v','w','x','y','z',' ','0','1','2','3','4','5','6','7','8','9','.','_','-'};
+	//This is based on N
+	public String location(long val)
+	{
+		
+	}
+	//This is based on K.
+	public String value(long val)
+	{
+		
+	}
+}

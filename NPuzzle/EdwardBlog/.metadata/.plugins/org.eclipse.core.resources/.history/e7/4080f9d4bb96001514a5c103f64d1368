@@ -1,0 +1,66 @@
+package generatePatternDatabase;
+
+public class SquareLookup {
+
+	private int N;
+	private int K;
+	/**
+	 * 
+	 * @param N - Represents the number of squares represented by the filename.
+	 */
+	public SquareLookup(int N, int squareSize)
+	{
+		this.N=N;
+		this.K=squareSize-N;
+	}
+
+	public static String longToFileString(long squareCopy)
+	{
+		int width=4;
+		int height=4;
+		StringBuilder sb=new StringBuilder();
+		for(int i=0; i<width*height; i++)
+		{
+			byte val=(byte)(squareCopy&0x0F);
+			squareCopy>>>=4;
+			sb.append(val);
+		}
+		return sb.toString();
+	}
+	//This is based on N
+	private String location(long squareCopy)
+	{
+		StringBuilder sb=new StringBuilder();
+		for(int i=0; i<N; i++)
+		{
+			byte val=(byte)(squareCopy&0x0F);
+			squareCopy>>>=4;
+			sb.append(val);
+		}
+		return sb.toString();
+	}
+	//This is based on K.
+	private String value(long squareCopy)
+	{
+		StringBuilder sb=new StringBuilder();
+		for(int i=0; i<N; i++)
+		{
+			squareCopy>>>=4;
+		}
+		for(int i=0; i<K; i++)
+		{
+			byte val=(byte)(squareCopy&0x0F);
+			squareCopy>>>=4;
+			sb.append(val);
+		}
+		return sb.toString();
+	}
+	public void add(long val)
+	{
+		
+	}
+	public boolean exists(long val)
+	{
+		
+	}
+}

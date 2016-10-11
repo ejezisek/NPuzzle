@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />	
+	<link href="css/nouislider.min.css" rel="stylesheet" /	>
+	
+	<!--[if lte IE 7]>
+		<link rel="stylesheet" href="css/ie.css" type="text/css" charset="utf-8" />	
+	<![endif]-->
+	<script>pageName="Blog"</script>
+	<script src="Javascript/run_prettify.js"></script>
+	<script src="Javascript/nouislider.min.js"></script>
+	<script src="Javascript/jquery-1.11.2.min.js"></script>
+	<script src="Javascript/jcanvas.min.js"></script>
+	<script src="Javascript/jquery-ui.js"></script>
+    <script src="Javascript/inorderTraversal.js"></script>
+	<script src="Javascript/master.js"></script>
+	<script src="Javascript/blog.js"></script>
+	
+</head>
+  <link rel="stylesheet" href="css/jquery-ui.css">
+
+
+<body>
+	<div id="header">
+		<div id="headerLink"></div>
+		<div id="navigation"></div>
+	</div> <!-- /#header -->
+	<div id="contents">
+		<div class="background">
+			<div id="blogs">
+				<div class="sidebar">
+					<div class="posts">
+					</div>
+					<div class="archives">
+					</div>
+				</div>
+				<div class="section">
+					<h2>Traversing a Tree - Inorder Traversal </h2>
+					<p>Inorder Traversal is a method of traversing a Binary Tree.  
+					In-order traversal works by navigating to the left node, performing the traversal on the left node, navigating to the right node and performing the traversal on the right node and finally printing the root node. 
+					 This continues until every node in the tree has been visited.  
+					 This blog will continue by  displaying an interactive tree, showing code in Java which utilizes templates for reuse, and
+					 demonstrating unit tests that can be performed on the code.   
+					 </p>
+					<h2>Interactive Traversal</h2>
+					<p>
+						Below is a display of the tree as it goes through the postorder traversal.  
+Press next to iterate through each element.  Each element starts off as a light blue.  After clicking next, the first activated element in the post order traversal will turn dark purple.
+Elements can be deleted by clicking on them.  You can increase the number of elements by dragging the slide bar to the right and decrease them by dragging it to the left.
+</p>
+<table>
+	<tr>
+		<td>
+		<table>
+			<tr>
+			<td>
+				<canvas width=500 height=270 id="canvas"></canvas>
+
+			</td>
+			</tr>
+			<tr>
+			<td align="center">
+				<button type="button" onclick="transmit()">Next</button>
+			</td>
+			</tr>
+		</table>
+		</td>
+
+		<td>
+		</td>
+
+	</tr>
+
+</table>
+
+	<p>
+			<div id="colorpicker">
+				<div class="sliders" id="skipstep">
+				</div>
+			</div>
+				<label for="amount">Number of Nodes:</label>
+		<input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+	</p>  
+<div id="slider-range-max"></div>
+<h2>Java Representation:</h2>
+ 					<pre class="prettyprint linenums" id="mainCode">
+/**
+ * This action has two template values.  The template value T
+ * ensures that any Nodes operations can be supported by
+ * any action.  The template value K allows the Action to return any value
+ * in the getValue operation.  This should allow the postorder traversal to 
+ * be reused for many different types of problems.
+ * @param &ltT&gt
+ * @param &ltK&gt
+ */
+public static interface Action&ltT extends Node&ltT&gt, K&gt
+{
+	public void performAction(Node&ltT&gt node);
+	public boolean complete();
+	public K getValue();
+}
+
+/**
+ * The Node is able to get the left node and the right node.  This is the 
+ * requirement for a Binary Tree.  The Node has a template element T which 
+ * extends Node&ltT&gt.  This allows Action&ltT extends Node&ltT&gt&gt to use 
+ * any public methods inside Node&ltT&gt that we do not currently know about
+ * and when the traversal goes left or right, it returns the correct Node 
+ * type instead of returning a Node that can only go left and right.
+ * @param &ltT&gt
+ */
+public static interface Node&ltT extends Node&ltT&gt&gt 
+{
+	public T getLeft();
+	public T getRight();
+}
+ 
+/**
+ * This traverses nodes in a preorder fashion.
+ * It calls nodes recursively from the left and then 
+ * recursively calls the nodes to the right.
+**/
+
+public static <T extends BinaryNode<T>, K> K InorderTraversal(T head, Action<T, K> action)
+{
+	if(head==null || action.complete())
+		return action.getValue();
+	T left=head.getLeft();
+	PreorderTraversal(left, action);
+	action.performAction(head);
+	T right=head.getRight();
+	PreorderTraversal(right, action);
+	return action.getValue();
+}
+public static &ltT extends BinaryNode&ltT&gt, K&gt K PreorderTraversal(T head, 
+                                                       Action&ltT, K&gt action)
+{
+	if(head==null || action.complete())
+		return action.getValue();
+	action.performAction(head);
+	T left=head.getLeft();
+	PreorderTraversal(left, action);
+	T right=head.getRight();
+	PreorderTraversal(right, action);
+	return action.getValue();
+}
+</pre>
+
+<br>
+	<h2>Unit Testing</h2>
+	<p>
+	After creating the post-order traversal, it needs to be tested.  
+	To do this, we create a tree and ensure the nodes are traversed in the correct order.
+	To ensure the nodes are traversed in the correct order 
+	we implement a method to figure out the Kth item of the list.  To ensure that 
+	the postorder traversal is correct, we create a tree with 3 nodes.
+	A root element "one", and its left element "two" followed by its right element "three".
+	In the postorder traversal, the first element printed is the left element "two", the second
+	printed element is the right element "three" and finally the third node is printed "one".
+	As such, we will show that the tree is traversed in the correct manner for at least three nodes.
+	</p>
+	<pre class="prettyprint linenums" id="mainCode">
+private static class getKthItemAction implements Traversals.Action&ltTestNode, String&gt
+{
+	String value=null;
+	int index=0;
+	private int desiredIndex;
+	private boolean complete;
+	public getKthItemAction(int desiredIndex)
+	{
+		this.desiredIndex=desiredIndex;
+		complete=false;
+	}
+	@Override
+	public void performAction(Traversals.Node&ltTestNode&gt node) {
+		index++;
+		if(index==desiredIndex)
+		{
+			complete=true;
+			value=node.toString();
+		}
+	}
+
+	@Override
+	public boolean complete() {
+		// TODO Auto-generated method stub
+		return complete;
+	}
+
+	@Override
+	public String getValue() {
+		// TODO Auto-generated method stub
+		return value;
+	}
+	
+}
+
+private static class TestNode implements Traversals.Node&ltTestNode&gt
+{
+	private TestNode left;
+	private TestNode right;
+	private String value;
+	public TestNode(String value)
+	{
+		this.value=value;
+	}
+	public void setLeft(TestNode left)
+	{
+		this.left=left;
+	}
+	public void setRight(TestNode right)
+	{
+		this.right=right;
+	}
+	@Override
+	public TestNode getLeft() {
+		// TODO Auto-generated method stub
+		return left;
+	}
+
+	@Override
+	public TestNode getRight() {
+		// TODO Auto-generated method stub
+		return right;
+	}
+	@Override
+	public String toString()
+	{
+		return value;
+	}
+
+
+}
+public TestNode generateTree()
+{
+	TestNode one=new TestNode("one");
+	TestNode two=new TestNode("two");
+	TestNode three=new TestNode("three");
+	one.setLeft(two);
+	one.setRight(three);
+	return one;
+}
+
+@Test
+public void Postordertest() {
+	TestNode root=generateTree();		
+	assertTrue("two".equals(Traversals.PostorderTraversal(root, new getKthItemAction(1))));
+	assertTrue("three".equals(Traversals.PostorderTraversal(root, new getKthItemAction(2))));
+	assertTrue("one".equals(Traversals.PostorderTraversal(root, new getKthItemAction(3))));
+}
+	</pre>
+	
+					</div>   
+				</div>
+			</div>
+		</div>
+<div id="footer"></div> <!-- /#footer -->
+   <script src="Javascript/treecreate.js"></script>
+  
+</body>
+</html>

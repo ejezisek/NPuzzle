@@ -1,0 +1,49 @@
+package generatePatternDatabase;
+
+public enum PatternDBSlidingSquareTrieFlyweight {
+	private PatternDBSlidingSquareTrie trie;
+
+	public PatternDBSlidingSquareTrieFlyweight()
+	{
+		trie=new PatternDBSlidingSquareTrie();
+	}
+	public boolean exists(byte [] vals)
+	{
+		if(vals.length!=16)
+			return false;
+		else
+		{
+			return trie.exists(vals);
+		}
+	}
+	public static byte[] convertToBytes(long square, byte height, byte width)
+	{
+		byte[] vals=new byte[height*width];
+		for(int i=0; i<vals.length; i++)
+		{
+			vals[i]=(byte)(square&0x0F);
+			square>>>=4;
+		}
+		return vals;
+	}
+	
+	public boolean exists(long square, byte height, byte width)
+	{
+			return exists(convertToBytes(square, height, width));
+	}
+
+	public void add(long square, Byte value)
+	{
+		add(convertToBytes(square), value);
+	}
+	public void add(byte [] vals, Byte value)
+	{
+		trie.addNode(vals, value);
+	}
+	public void write(String filename) {
+		trie.write(filename);
+	}
+	public int get(Integer i) {
+		return trie.get(PatternDBSlidingSquareTrie.toBytes(i));
+	}
+}
