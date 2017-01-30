@@ -1,9 +1,0 @@
-package generatePatternDatabase;
-
-public class FileBasedPriorityQueue {
-
-	public void add(PQItem pq)
-	{
-		
-	}
-}

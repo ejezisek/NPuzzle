@@ -1,6 +1,0 @@
-package generatePatternDatabase;
-
-public interface StorageSystem {
-	public void add(String location, String value, int numInRoute);
-	public boolean exists(String location, String value);
-}

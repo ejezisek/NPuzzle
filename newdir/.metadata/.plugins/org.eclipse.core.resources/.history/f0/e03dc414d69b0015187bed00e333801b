@@ -1,8 +1,0 @@
-
-public enum HeuristicFactory {
-	MANHATTANDISTANCE, MANHATTANDISTANCEWITHLINEARCONFLICT, PATTERNDATABASE;
-	private HeuristicFactory()
-	{
-		
-	}
-}
