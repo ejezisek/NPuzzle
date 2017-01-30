@@ -10,6 +10,7 @@ public class FifteenSquareDisjointMain_1 {
 
     static long index=0;
 
+    public static String defaultFileDir="/home/ejezisek/Projects/generatePatternDBFiles";
 	public static void main(String[] args) {
 
 		byte[] vals={1,2,3,4,5,6,6,6,7,6,6,6,8,6,6,0};
@@ -40,7 +41,7 @@ public class FifteenSquareDisjointMain_1 {
 			}
 
 		};
-		String filename = "/home/edward/Research/generatePatternDBFiles/15Squareresults_disjoint_1.out";
+		String filename = defaultFileDir+"/15Squareresults_disjoint_1.out";
 		try {
 			FifteenSquareBFS.BFS(pdssn, action, availableValues, filename);
 		} catch (IOException e) {

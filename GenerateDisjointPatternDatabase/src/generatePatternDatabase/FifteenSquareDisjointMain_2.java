@@ -1,9 +1,9 @@
 package generatePatternDatabase;
 
 
-import java.io.IOException;
-
 import ed.util.algorithms.Action;
+
+import java.io.IOException;
 
 public class FifteenSquareDisjointMain_2 {
 
@@ -43,7 +43,7 @@ public class FifteenSquareDisjointMain_2 {
 			}
 
 		};
-		String filename = "/home/edward/Research/generatePatternDBFiles/15Squareresults_disjoint_2.out";
+		String filename = FifteenSquareDisjointMain_1.defaultFileDir+"/15Squareresults_disjoint_2.out";
 		FifteenSquareBFS.BFS(pdssn, action, availableValues, filename);
 	}
 

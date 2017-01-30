@@ -43,7 +43,7 @@ public class FifteenSquareDisjointMain_3 {
 			}
 
 		};
-		String filename = "/home/edward/Research/generatePatternDBFiles/15Squareresults_disjoint_3.out";
+		String filename = FifteenSquareDisjointMain_1.defaultFileDir+"/15Squareresults_disjoint_3.out";
 		FifteenSquareBFS.BFS(pdssn, action, availableValues, filename);
 		System.out.println("Complete");
 	}

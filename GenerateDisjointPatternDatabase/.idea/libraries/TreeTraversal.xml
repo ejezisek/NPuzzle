@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="TreeTraversal">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../JavaImplementation/TreeTraversal" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../JavaImplementation/TreeTraversal/src" />
+    </SOURCES>
+  </library>
+</component>
