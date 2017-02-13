@@ -62,10 +62,11 @@ function getBlogPosts()
 						"<script>"+
 							"drawCenteredTree(val, 15, 300);"+
 						"</script>",
-						index:1,
+						index:2,
 						image: "inorder.png",
 						shortDescription: "In-Order Traversal of a Binary Tree"}
 
+	var nPuzzle={page: "N-Puzzle", url:"npuzzle.html", date: "02/13/2017", description: "Discusses research regarding the N-Puzzle", displaySnippet:"No Display Snippet yet", index:1, image: "", shortDescription: "N Puzzle problem."}
 	
 	return [preorder, postOrder, inOrder];
 }

@@ -14,8 +14,8 @@ public class FifteenSquareBFS {
     	PatternDBSlidingSquareTriePrototype prototype=new PatternDBSlidingSquareTriePrototype(head.getHeight(), head.getWidth(), availableValues);
     	prototype.add(head.getSquares(), (byte) head.getNumInRoute());
     	PatternDBSlidingSquareCollection trie=prototype.getTrie();
-		String directory="priorityQueueDir";
-		File f=new File("./"+directory);
+		String directory="/home/ejezisek/Projects/priorityQueueDir";
+		File f=new File(directory);
 		f.mkdir();
     	FileBasedPriorityQueue q=new FileBasedPriorityQueue(directory);
     	q.add(new PQItem(trie.getIndex(head.getSquares()), (byte)head.getNumInRoute()));
