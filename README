@@ -1,1 +1,1 @@
-To build this project run "jar -cvf * ROOT.war" from within the WebContent folder.  Move ROOT.war to $CATALINA_HOME/webapps and restart the apache server.
+To build this project run "jar -cvf ROOT.war *" from within the WebContent folder.  Move ROOT.war to $CATALINA_HOME/webapps and restart the apache server.
